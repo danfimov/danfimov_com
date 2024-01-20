@@ -10,63 +10,55 @@ import ContentMedia from '../components/ContentMedia.astro'
   <Hero />
   <section class="my-64">
     <div class="container">
-      <h2 class="mb-16 text-6xl">Features</h2>
+      <h2 class="mb-16 text-6xl">What you can find here?</h2>
       <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-        <Feature icon="mdi:tailwind" title="Tailwind CSS">
-          Use the power of Tailwind to greatly improve your productivity and enhance your developer workflow.
+        <Feature icon="mdi:language-markdown" title="Blog">
+          Humanity creates .md format only for my beautiful blog posts. And you have an opportunity to read them.
         </Feature>
-        <Feature icon="mdi:wheelchair-accessibility" title="a11y Components">
-          17 components and counting, all tried and tested for the most optimal accessible experience for your visitors.
+        <Feature icon="mdi:cog" title="Usefull programs">
+          I'm a programmer. So I think that this world needs one more todo-app and untitled-project-1 from me.
         </Feature>
-        <Feature icon="mdi:looks" title="Prettier">
-          Less worry about formatting your code, let the Astro Prettier integration do the heavy lifting.
+        <Feature icon="mdi:chess-rook" title="Chess memes">
+          And he sacrificed... THE ROOK!!!<br>
+          (and 7 years of his life for that hobby)
         </Feature>
-        <Feature icon="mdi:eslint" title="ESLint">
-          Lint your code with strict a11y settings to ensure you stay on track with the WCAG standards.
+        <Feature icon="mdi:lighthouse" title="Game Reviews">
+          I can be your lighthouse in a world of time-killers. Like "Metacritic" but with non-paid opinion.
         </Feature>
-        <Feature icon="mdi:book-open-page-variant" title="Blog">
-          This theme comes with a fully integrated blog, dynamic pages and SEO optimization.
-        </Feature>
-        <Feature icon="mdi:language-markdown" title="Markdown & MDX">
-          Easily use .md and .mdx pages to build your websites or use it with Netlify CMS.
+        <Feature icon="mdi:wheelchair-accessibility" title="Random Dashboards">
+          Fun fact: today I haven't filled in any rings on my Apple Watch yet. And yesterday. And 24 years straight...
         </Feature>
         <Feature icon="mdi:theme-light-dark" title="Dark mode">
-          Fully integrated Dark mode gives your users the choice for their favorite viewing mode.
-        </Feature>
-        <Feature icon="mdi:cog" title="Design System">
-          The theme offers some very handy utilities to help you build your website faster.
-        </Feature>
-        <Feature icon="mdi:lighthouse" title="Lighthouse Scores">
-          Excellent lighthouse scores means your website will load faster and get better SEO rankings.
+          Actually I just love this icon from site template. So it will be here.
+          Put star on <a href="https://github.com/markteekman/accessible-astro-starter">template repository</a>!
         </Feature>
       </div>
     </div>
   </section>
   <ContentMedia imgSrc="/accessible-components.webp">
-    <h2>Accessible Components</h2>
+    <h2>Purpose of this site</h2>
     <p class="text-2xl">
-      This theme provides plenty of tried and tested Accessible Astro Components. Some are native to this theme and a
-      lot of others are integrated using a <a href="https://github.com/markteekman/accessible-astro-components"
-        >separate package</a
-      >. They'll get you up and running in building an accessible solution for your visitors.
+      To be honest I could not share information about me on the Internet almost all my life.
+      Because somewhere in my head I feel insecure about myself and don't really think that I can be interesting for someone.
+      So creation of this site is kind of psychological exercise for me.
     </p>
   </ContentMedia>
   <ContentMedia imgSrc="/wcag-compliant.webp" reverseImg={true}>
-    <h2>WCAG 2.1 AA Compliant</h2>
+    <h2>And one more thing</h2>
     <p class="text-2xl">
-      Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
-      navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
-      reaching WCAG AA compliance.
+      Maybe it will be a nice example for someone who find this page in a corner of WWW
+      and is feeling something similar now. <br><br>
+      Thank you for your attention and have a nice day. Sending you hugs 💛
     </p>
   </ContentMedia>
   <section class="mb-32 mt-64">
     <div class="container">
-      <h2 class="mb-16 text-6xl">Counters</h2>
+      <h2 class="mb-16 text-6xl">Some random numbers</h2>
       <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-4">
-        <Counter count="520" title="Stars" sub="On GitHub" />
-        <Counter count="17" title="Accessible" sub="Components" />
-        <Counter count="500" title="Commits" sub="Merged" />
-        <Counter count="18+" title="Months" sub="Since launch" />
+        <Counter count="7" title="Followers" sub="On GitHub" />
+        <Counter count="Even less" title="Followers" sub="On Instagram" />
+        <Counter count="100%" title="Confidence" sub="That I'm cool" />
+        <Counter count="14+" title="Months" sub="With psychologist" />
       </div>
     </div>
   </section>
