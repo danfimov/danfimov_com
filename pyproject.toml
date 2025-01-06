@@ -1,0 +1,24 @@
+[project]
+name = "danfimov-com"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = ["litestar[jinja]>=2.13.0", "uvicorn>=0.34.0"]
+
+[dependency-groups]
+dev = ["markdown2>=2.5.2", "ruff>=0.8.4"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+
+[tool.ruff.lint]
+ignore = []
+select = ["E", "F"]
+
+
+[tool.ruff.lint.isort]
+known-local-folder = ["src"]
+lines-after-imports = 2

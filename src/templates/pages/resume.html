@@ -1,0 +1,193 @@
+{% extends "base.html" %} {% block content %}
+<div id="root">
+    <div class="min-h-screen bg-background text-foreground">
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-4xl font-bold mb-4">Дмитрий Анфимов</h1>
+            <div class="flex items-center gap-2 text-muted-foreground mb-4">
+                <img src="static/assets/icons/map-pin.svg" class="h-4 w-4" alt="map pin icon"/><span>Белград, Сербия</span>
+            </div>
+            <p class="text-xl text-muted-foreground max-w-2xl">
+                Backend разработчик на Python c 3+ года опыта в создании масштабируемых веб-приложений и микросервисов.
+            </p>
+            <div class="flex gap-4 mt-6">
+                <a
+                    target="_blank"
+                    title="Check out my GitHub profile"
+                    href="https://github.com/danfimov"
+                    class="inline-flex items-center justify-center whitespace-nowrap font-medium border border-input bg-background shadow-sm h-8 rounded-md px-3 text-xs"
+                >
+                    <img src="static/assets/icons/github.svg" class="h-4 w-4 mr-2" alt="github icon"/>GitHub
+                </a>
+            <a
+                target="_blank"
+                title="Contact me via Telegram"
+                href="https://t.me/anfimov_work"
+                class="inline-flex items-center justify-center whitespace-nowrap font-medium border border-input bg-background shadow-sm h-8 rounded-md px-3 text-xs"
+            >
+                <img src="static/assets/icons/telegram.svg" class="h-4 w-4 mr-2" alt="telegram icon"/>Telegram
+            </a>
+            <a
+                target="_blank"
+                title="Contact me via email"
+                href="mailto:lovesolaristics@gmail.com"
+                class="inline-flex items-center justify-center whitespace-nowrap font-medium border border-input bg-background shadow-sm h-8 rounded-md px-3 text-xs"
+            >
+                <img src="static/assets/icons/mail.svg" class="h-4 w-4 mr-2" alt="email icon"/>Email
+            </a>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 py-8">
+            <section class="mb-16">
+                <h2 class="text-2xl font-semibold mb-6">Опыт работы</h2>
+                <ul class="space-y-6">
+                    <li class="p-6 border rounded-lg">
+                        <h3 class="text-lg font-medium">Backend разработчик</h3>
+                        <p class="text-sm text-muted-foreground mb-2">Yandex • HR Tech • Sep 2024 - Present</p>
+                        <p class="text-muted-foreground mb-4">
+                            <ul class="list-disc pl-4 pb-2">
+                                <li>Запустил обновленный бэк-офис с улучшенным интерфейсом для сбора контента курсов;</li>
+                                <li>Переписал бекенд для системы нотификаций: добавил каналы связи (email и telegram) и сделал удобные настройки;</li>
+                                <li>Обновил устаревший стек (Django 1.1 -> Django 5, заменил старые библиотеки без даунтайма и инцидентов);</li>
+                                <li>Ускорил CI/CD в 4 раза и обновил инструменты для тестирования и линтинга кода. Внедрил часть своих наработок в сервисы смежных команд.</li>
+                            </ul>
+                        </p>
+                    </li>
+                    <li class="p-6 border rounded-lg">
+                        <h3 class="text-lg font-medium">Backend разработчик</h3>
+                        <p class="text-sm text-muted-foreground mb-2">Yandex • AutoRu Bisiness • Apr 2023 - Sep 2024</p>
+                        <p class="text-muted-foreground mb-4">
+                            {% if lang == 'eng' %}
+                            <ul class="list-disc pl-4">
+                                <li>Developed internal APIs and communication systems, improving integration between Auto.ru and Auto.ru Business services;</li>
+                                <li>Supported and enhanced the offer parsing and processing system for Auto.ru, ensuring comprehensive information coverage on the site;</li>
+                                <li>Advanced my skills in message brokers and databases while implementing DDD (Domain-Driven Design);</li>
+                                <li>Focused on improving system observability by enhancing metrics and alerts, contributing to better system management</li>
+                            </ul>
+                            {% else %}
+                            <ul class="list-disc pl-4">
+                                <li>Разрабатывал внутренние API и системы коммуникации, улучшая интеграцию между сервисами Auto.ru и Auto.ru Business;</li>
+                                <li>Поддерживал и улучшал систему парсинга и обработки объявлений с различных классифайдов;</li>
+                                <li>Улучшил наблюдаемости микросервисов команды: внедрил общие практики для поставки метрик и создания алертов о работе микросервисов;</li>
+                                <li>В процессе работы углубил знания о брокерах сообщений (Kafka, RabbitMQ) и базах данных (Postgres, YDB), научился писать код по принципам Domain-Driven Design.</li>
+                            </ul>
+                            {% endif %}
+                        </p>
+                    </li>
+                    <li class="p-6 border rounded-lg">
+                        <h3 class="text-lg font-medium">Junior Backend разработчик</h3>
+                        <p class="text-sm text-muted-foreground mb-2">Yandex • Schoolbook • Jun 2022 - Apr 2023</p>
+                        <p class="text-muted-foreground mb-4">
+                            {% if lang == 'eng' %}
+                            <ul class="list-disc pl-4">
+                                <li>Developed and maintained microservices, including a teacher-to-student feedback system;</li>
+                                <li>Advanced infrastructure for school olympiads by rejuvenating and modifying a large Django monolith. Such annual projects facilitate user aquisition to Yandex Ecosystem;</li>
+                                <li>Engineered a backend and admin panel for a modular homepage with dynamically customized content, improving user experience for methodologists, teachers, and students;</li>
+                                <li>Enhanced DevExp by refining CI/CD processes, speeding up testing and modernizing deployment tools.</li>
+                            </ul>
+                            {% else %}
+                            <ul class="list-disc pl-4">
+                                <li>Разрабатывал и поддерживал микросервисы (на FastAPI и Aiohttp), включая систему обратной связи между учителями и учениками;</li>
+                                <li>Улучшил систему для работы школьных олимпиад на платформе (работал с Django-монолитом и асинхронными задачами в celery). Такие ежегодные проекты помогают привлекать пользователей в экосистему Яндекса;</li>
+                                <li>Сделал API и админку для новой главной страницы с динамически настраиваемым контентом, улучшив пользовательский опыт для методистов, учителей и учеников;</li>
+                                <li>Улучшил процесс разработки за счет оптимизации CI/CD, ускорения автоматического тестирования и модернизации инструментов деплоя.</li>
+                            </ul>
+                            {% endif %}
+                        </p>
+                    </li>
+                    <li class="p-6 border rounded-lg">
+                        <h3 class="text-lg font-medium">Стажер backend разработчик </h3>
+                        <p class="text-sm text-muted-foreground mb-2">Yandex • Schoolbook • Jan 2022 - May 2022</p>
+                        <div class="text-muted-foreground mb-4">
+                            {% if lang == 'eng' %}
+                                <ul class="list-disc pl-4">
+                                    <li>Developed a backend for a new service that allows teachers to create and share educational materials;</li>
+                                    <li>Implemented a system for collecting and analyzing user feedback, which helped to improve the service;</li>
+                                    <li>Participated in the development of a new feature for the service, which allows teachers to create and conduct online tests.</li>
+                                </ul>
+                            {% else %}
+                                <ul class="list-disc pl-4">
+                                    <li>Помог проектам Яндекс Образования переехать из Github в репозиторий компании (Arcadia) и настраивал CI/CD на внутренних технологиях;</li>
+                                    <li>Написал микросервис, который позволил учителям оставлять обратную связь ученикам в виде стикеров. Фича улучшила пользовательский опыт и незначительно повлияла на WAU продукта;</li>
+                                    <li>Сделал шаблон для микросервисов и улучшил CLI для разворачивания приложений Яндекс Учебника во внутренней инфраструктуре. Это ускорило разработку новых фич вне основного Django-монолита.</li>
+                                </ul>
+                            {% endif %}
+                        </>
+                    </li>
+                    <li class="p-6 border rounded-lg">
+                        <h3 class="text-lg font-medium">Разработчик на Python</h3>
+                        <p class="text-sm text-muted-foreground mb-2">Freelance • Jan 2021 - May 2021 </p>
+                        <div class="text-muted-foreground mb-4">
+                            {% if lang == 'eng' %}
+                                <p>Fulfilled orders on the freelance website (62 orders overall, 49 positive reviews).</p>
+                                <p>Worked on orders that included creating small backend services for online stores and writing student papers related to data science and Python programming.</p>
+                            {% else %}
+                                <p>Выполнял заказы на онлайн бирже (62 выполненных заказа, 49 позитивных отзыва):</p>
+                                <ul class="list-disc pl-4">
+                                    <li>Создавал учебные бэкенд сервисы (на Aiohttp<img src="static/assets/icons/bolt.svg" class="w-2 inline"/>) и Telegram боты (Aiogram);</li>
+                                    <li>Разрабатывал интерактивные дешборды для проектов по data science (на Streamlit);</li>
+                                    <li>Писал студенческие работы, связанные с программированием на Python.</li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            <section class="mb-16">
+                <h2 class="text-2xl font-semibold mb-6">Образование</h2>
+                <ul class="space-y-6">
+                    {% for item in education %}
+                        <li class="rounded-xl border bg-card text-card-foreground shadow p-6">
+                            <h3 class="text-lg font-medium">{{ item.title }}</h3>
+                            <p class="text-sm text-muted-foreground">{{ item.organization }} • {{ item.date_start }} • {{ item.date_end }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section class="mb-16">
+                <h2 class="text-2xl font-semibold mb-6">Лицензии и сертификаты</h2>
+                <ul class="space-y-6">
+                    {% for certificate in certificates %}
+                    <li class="rounded-xl border bg-card text-card-foreground shadow p-6 hover:bg-accent">
+                        <h3 class="text-lg font-medium hover:underline underline-offset-4"><a target="_blank" href="{{ certificate.link }}">{{ certificate.title }}</a></h3>
+                        <p class="text-sm text-muted-foreground">{{ certificate.organization }} • {{ certificate.date }}</p>
+
+                        {% if certificate.technologies %}
+                            <ul class="mt-4">
+                            {% for technology in certificate.technologies %}
+                                <li class="inline-flex items-center justify-center whitespace-nowrap font-medium bg-secondary text-secondary-foreground shadow h-8 rounded-md px-3 text-xs">{{ technology }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section>
+                <h2 class="text-2xl font-semibold mb-6">Open source проекты</h2>
+                <ul class="grid gap-6 md:grid-cols-2">
+                    {% for project in projects %}
+                        <li class="rounded-xl border bg-card text-card-foreground shadow p-6">
+                            <h3 class="text-lg font-medium mb-4">
+                                <a href="{{ project.link }}" target="_blank" class="hover:underline underline-offset-4">{{ project.title }}</a>
+                            </h3>
+                            <div class="text-sm text-muted-foreground mb-4">
+                                <p class="pb-4">{{ project.description }}</p>
+                                <p>{{ project.creation_reason }}</p>
+                            </div>
+                            <div class="flex gap-2 flex-wrap">
+                                {% if project.technologies %}
+                                <ul>
+                                    {% for technology in project.technologies %}
+                                        <li class="inline-flex items-center justify-center whitespace-nowrap font-medium bg-secondary text-secondary-foreground shadow h-8 rounded-md px-3 text-xs">{{ technology }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
