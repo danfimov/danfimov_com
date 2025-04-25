@@ -1,0 +1,20 @@
+social:
+  title: Links
+  list:
+    - title: Telegram
+      url: https://t.me/anfimov_work
+    - title: LinkedIn
+      url: https://www.linkedin.com/in/danfimov/
+
+email:
+  title: Email
+  text: lovesolaristics@<wbr>gmial.com
+  link: mailto:lovesolaristics@gmial.com
+
+credits:
+  title: Credits
+  list:
+    - title: Developed by me
+      url: https://github.com/danfimov/danfimov_com
+    - title: Powered by Eleventy
+      url: https://www.11ty.dev/

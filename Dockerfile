@@ -1,25 +1,29 @@
-# Install uv
-FROM python:3.12-slim
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+# Use the official Node.js image as the base image
+FROM node:20-alpine AS build
 
-# Change the working directory to the `app` directory
+# Set the working directory
 WORKDIR /app
 
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
 # Install dependencies
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-project
+RUN npm ci
 
-# Copy the project into the image
-COPY src /app/src
+# Copy the rest of the application code
+COPY . .
 
-# Sync the project
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen
+# Build the Eleventy site
+RUN npm run build
 
+# Use a lightweight web server to serve the static files
+FROM nginx:alpine
 
-EXPOSE ${SERVICE_PORT:-8000}
-CMD ["sh", "-c", "uv run uvicorn src.main:app --host ${SERVICE_HOST:-0.0.0.0} --port ${SERVICE_PORT:-8000}"]
+# Copy the built site from the build stage
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]

@@ -28,7 +28,7 @@ services:
       - "traefik.http.routers.whoami.rule=Host(`danfimov.com`) && PathPrefix(`/whoami`)"
   site:
     container_name: site
-    image: cr.yandex/crph9f0poag6rukqpuci/danfimov_com:port_fix
+    image: cr.yandex/crph9f0poag6rukqpuci/danfimov_com:latest
     expose:
       - 80
     command: uv run uvicorn src.main:app --host "0.0.0.0" --port 80

@@ -1,0 +1,41 @@
+/* About Education */
+
+.about-education {
+    display: grid;
+    row-gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Item */
+
+.about-education__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+    column-gap: 20px;
+}
+
+/* Company */
+
+.about-education__company {
+    grid-column: 2;
+}
+
+/* Period */
+
+.about-education__period {
+    grid-column: 1;
+}
+
+/* Title */
+
+.about-education__title {
+    grid-column: 2;
+    color: var(--color-text-secondary);
+}
+
+/* Description */
+.about-education__desc {
+    grid-column: 3;
+}

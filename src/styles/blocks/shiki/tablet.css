@@ -1,0 +1,9 @@
+@media (1024px <= width < 1760px) {
+
+	/* Shiki */
+
+	.shiki {
+		tab-size: 3;
+	}
+
+}

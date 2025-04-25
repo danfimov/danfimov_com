@@ -1,0 +1,8 @@
+layout: page.njk
+permalink: index.html
+intro:
+  hi: Привет, я
+  name: Дима Анфимов
+  alt: Black and white portrait on a colored background.
+  who: Я бекенд-разработчик, влюбленный в Python, веб-технологии и шахматы
+  what: Здесь вы можете найти [мои мысли](/articles/) о веб-разработке, некоторые из [моих проектов](/projects/) и информацию [обо мне](/about/)

@@ -1,0 +1,29 @@
+@media (width < 1024px) {
+
+	/* Lead */
+
+	.lead {
+		padding-block: 40px;
+	}
+
+	/* Scribble */
+
+	.lead__scribble {
+		inset: 0;
+		margin: auto;
+		inline-size: calc(100% - 24px * 2);
+		max-inline-size: 600px;
+		block-size: auto;
+	}
+
+}
+
+@media (width < 1760px) {
+
+	/* Title */
+
+	.lead__title {
+		font-size: var(--font-size-h1);
+	}
+
+}

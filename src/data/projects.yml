@@ -1,0 +1,33 @@
+# Websites
+
+- title: Сайты
+  desc: В основном бесполезные, но достаточно забавные или ностальгические, чтобы оправдать оплату доменного имени.
+  projects:
+      - title: Курс по web-технологиям
+        desc: Курс, рассчитанный на первокурсников. Собран на движке Shower.
+        url: https://danfimov.github.io/shower-presentation/
+        tags:
+        - HTML
+        - CSS
+        - JS
+
+# Tools
+
+- title: Инструменты
+  desc: Небольшие библиотеки, которые я сделал для себя, но могут пригодиться другим.
+  projects:
+
+    - title: ya_tracker_client
+      desc: Обертка над API Яндекс Трекера для удобной работы с задачами и проектами из Python кода.
+      url: https://github.com/danfimov/ya_tracker_client
+      tags:
+      - Python
+      - Aiohttp
+      - Pydantic
+
+    - title: django-tinymce4-pro
+      desc: Библиотека для интеграции TinyMCE 4 виджета в Django админку. Работает со всеми версиями Django.
+      url: https://danfimov.github.io/django-tinymce4-plus/
+      tags:
+      - Python
+      - Django

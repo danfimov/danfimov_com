@@ -1,0 +1,76 @@
+{% set title =
+	global.title if
+	page.url == '/' else
+	title + (', page ' + (pagination.pageNumber + 1) if
+	pagination.next or pagination.previous else
+	'') + ' — ' + global.title
+%}
+
+{% set desc =
+	desc if
+	desc else
+	global.description
+%}
+
+{% set cover =
+	global.domain + page.url + 'cover.png' if
+	cover else
+	global.domain + '/images/covers/' + ('index' if
+	page.url == '/' else
+	page.fileSlug) + '.png'
+%}
+
+<!DOCTYPE html>
+<html class="page" lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{{ title }}</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="/styles/index.css">
+	<link rel="stylesheet" href="/styles/light.css" media="(prefers-color-scheme: light)">
+	<link rel="stylesheet" href="/styles/dark.css" media="(prefers-color-scheme: dark)">
+
+	<link rel="preload" href="/fonts/inter-variable.woff2" crossorigin as="font" type="font/woff2">
+	<link rel="preload" href="/fonts/jetbrains-mono.woff2" crossorigin as="font" type="font/woff2">
+
+	<link rel="icon" href="/images/logo/favicon.ico" sizes="32x32">
+	<link rel="icon" href="/images/logo/any.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="/images/logo/180.png">
+	<link rel="manifest" href="/manifest.json">
+
+	<link rel="canonical" href="{{ global.domain + page.url }}">
+	<link rel="me" href="https://mastodon.social/@pepelsbey">
+	<meta name="fediverse:creator" content="@pepelsbey@mastodon.social">
+
+	<meta name="description" content="{{ desc | markdownRemove }}">
+	<meta name="generator" content="{{ eleventy.generator }}">
+
+	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#c1f07c">
+	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#9874d3">
+
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="{{ title }}">
+	<meta property="og:description" content="{{ desc | markdownRemove }}">
+	<meta property="og:url" content="{{ (global.domain + page.url) }}">
+
+	<meta property="og:image" content="{{ cover }}">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@pepelsbey_dev">
+
+	<link rel="alternate" type="application/rss+xml" href="{{ global.domain }}/feed/" title="{{ global.title }}">
+
+	<script defer src="/scripts/index.js"></script>
+</head>
+<body class="page__body">
+	{% include 'header.njk' %}
+
+	{{ content | safe }}
+
+	{% include 'footer.njk' %}
+</body>
+</html>

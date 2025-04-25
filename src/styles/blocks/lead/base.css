@@ -1,0 +1,35 @@
+/* Lead */
+
+.lead {
+	position: relative;
+	display: grid;
+	row-gap: 20px;
+	overflow: hidden;
+	background-color: var(--lead-back);
+}
+
+/* Tags */
+
+.lead__tags {
+	order: -1;
+}
+
+/* Title */
+
+.lead__title {
+	margin: 0;
+	line-height: 1.1;
+	text-wrap: balance;
+	text-transform: uppercase;
+	font-weight: normal;
+	font-family: var(--font-family-heading);
+}
+
+/* Scribble */
+
+.lead__scribble {
+	position: absolute;
+	color: var(--lead-scribble-fill);
+	transform: scaleX(-1);
+	pointer-events: none;
+}

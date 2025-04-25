@@ -1,0 +1,46 @@
+<div class="main column">
+	<div class="main__gaps">
+		<main id="main">
+			<header class="caption">
+				<h1 class="caption__title caption__title--top">
+					{{ title }}
+				</h1>
+			</header>
+			<div class="two-columns">
+				<div class="two-columns__page">
+					<div class="content content-block content-inline">
+						<p>I hate broken links as much as you do. Please consider <a href="https://github.com/danfimov/danfimov_com/issues">filing an issue</a> so this won’t happen to anybody ever again. Thanks!</p>
+						<p>Meanwhile, have a look at some <a href="/articles/">articles</a> or <a href="/projects/">projects</a> I have.</p>
+					</div>
+				</div>
+			</div>
+		</main>
+		<aside>
+			<header class="caption">
+				<h2 class="caption__title">
+					Статьи
+					<span class="caption__number">
+						{{ collections.articles.length }}
+						<span class="caption__total">in total</span>
+					</span>
+				</h2>
+				<a class="caption__link action action--hover" href="/articles/" aria-label="View all articles">
+					<span class="caption__label">
+						Посмотреть все
+					</span>
+					<svg class="action__icon" width="24" height="24" aria-hidden="true">
+						<use href="/images/icons.svg#right"/>
+					</svg>
+				</a>
+			</header>
+
+			{% from 'article-card-list.njk' import articleCardList with context %}
+
+			{{ articleCardList(
+				collection=collections.articles | reverse,
+				heading='h3',
+				limit=4
+			) }}
+		</aside>
+	</div>
+</div>

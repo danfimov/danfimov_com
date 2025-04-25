@@ -1,0 +1,35 @@
+@media (width < 1024px) {
+
+	/* Header */
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-content: center;
+		align-items: center;
+		padding-block: 16px;
+		box-shadow: 0 2px 0 var(--color-text-primary);
+	}
+
+	/* Button */
+
+	.header__button {
+		position: relative;
+		z-index: 2;
+
+		&[aria-expanded='false'] {
+			.header__icon-close,
+			.header__text-close {
+				display: none;
+			}
+		}
+
+		&[aria-expanded='true'] {
+			.header__icon-menu,
+			.header__text-menu {
+				display: none;
+			}
+		}
+	}
+
+}
