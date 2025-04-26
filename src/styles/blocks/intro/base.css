@@ -36,7 +36,6 @@
 .intro__who {
 	margin: 0;
 	font-family: var(--font-family-heading);
-	text-shadow: 2px 2px 0 var(--color-text-secondary);
 }
 
 /* What */

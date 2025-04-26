@@ -31,3 +31,10 @@
       tags:
       - Python
       - Django
+
+    - title: taskiq-ydb
+      desc: Плагин для Taskiq, который позволяет работать с задачами в YDB.
+      url: https://danfimov.github.io/taskiq-ydb/
+      tags:
+      - Python
+      - Taskiq
