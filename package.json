@@ -11,7 +11,7 @@
 		"javascript": "eslint"
 	},
 	"engines": {
-		"node": "20"
+		"node": "22"
 	},
 	"browserslist": [
 		"Chrome > 0 and last 2.5 years",
@@ -33,7 +33,7 @@
 		"@shikijs/markdown-it": "^1.25.1",
 		"@sindresorhus/slugify": "^2.2.1",
 		"editorconfig-checker": "^6.0.0",
-		"esbuild": "^0.24.2",
+		"esbuild": "^0.25.3",
 		"eslint": "^9.17.0",
 		"globals": "^15.14.0",
 		"html-minifier-terser": "^7.2.0",
