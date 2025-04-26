@@ -1,0 +1,46 @@
+/* Caption */
+
+.caption {
+	display: flex;
+	align-items: baseline;
+	padding-block-end: 20px;
+	border-block-end: solid 2px var(--color-text-primary);
+}
+
+/* Title */
+
+.caption__title {
+	display: flex;
+	margin: 0;
+	line-height: 1.1;
+	text-transform: uppercase;
+	font-weight: normal;
+	font-size: var(--font-size-h1);
+	font-family: var(--font-family-heading);
+}
+
+/* Number */
+
+.caption__number {
+	margin-inline-start: 4px;
+	line-height: 1.3;
+	font-size: var(--font-size-normal);
+	font-family: var(--font-family-text);
+}
+
+/* Total */
+
+.caption__total {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	opacity: 0;
+}
+
+/* Link */
+
+.caption__link {
+	margin-inline-start: auto;
+	color: var(--color-text-primary);
+}

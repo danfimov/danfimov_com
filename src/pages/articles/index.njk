@@ -1,0 +1,24 @@
+<main class="main column" id="main">
+	<header class="caption">
+		<h1 class="caption__title caption__title--top">
+			{{ title }}
+			<span class="caption__number">
+				{{ collections.articles.length }}
+				<span class="caption__total">in total</span>
+			</span>
+		</h1>
+	</header>
+	<div class="two-columns">
+		<div class="two-columns__cards">
+			{% from 'article-card-list.njk' import articleCardList with context %}
+
+			{{ articleCardList(
+				collection=pagination.items,
+				heading='h2',
+				limit=pagination.size
+			) }}
+
+			{% include 'pagination.njk' %}
+		</div>
+	</div>
+</main>

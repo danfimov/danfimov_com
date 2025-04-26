@@ -1,0 +1,33 @@
+/* Menu */
+
+.menu {
+	--menu-current-back: hsl(var(--color-sulu));
+	--menu-current-text: hsl(var(--color-ebony));
+}
+
+/* List */
+
+.menu__list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* Link */
+
+.menu__link {
+	padding: 0.15em;
+	border-radius: 2px;
+	color: var(--color-text-secondary);
+
+	@media (hover: hover) and (pointer: fine) {
+		&:hover {
+			color: var(--color-text-primary);
+		}
+	}
+
+	&[aria-current] {
+		background-color: var(--menu-current-back);
+		color: var(--menu-current-text);
+	}
+}

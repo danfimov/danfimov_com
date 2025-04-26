@@ -1,0 +1,8 @@
+title: "Help в Makefile"
+desc: "Несколько способов добавить `help` команду в Makefile."
+date: 2025-04-26
+tags:
+  - QOL
+
+cover: false
+layout: article.njk

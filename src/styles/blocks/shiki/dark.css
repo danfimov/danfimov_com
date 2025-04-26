@@ -1,0 +1,7 @@
+/* Shiki */
+
+.shiki {
+	&, span {
+		color: var(--shiki-dark);
+	}
+}

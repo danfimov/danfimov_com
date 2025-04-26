@@ -1,0 +1,42 @@
+/* About Work */
+
+.about-work {
+    display: grid;
+    row-gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Item */
+
+.about-work__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+    column-gap: 20px;
+}
+
+/* Company */
+
+.about-work__company {
+    grid-column: 2;
+}
+
+/* Period */
+
+.about-work__period {
+    grid-column: 1;
+}
+
+/* Title */
+
+.about-work__title {
+    grid-column: 2;
+    color: var(--color-text-secondary);
+}
+
+/* Description */
+.about-work__desc {
+    grid-column: 3;
+    grid-row:
+}

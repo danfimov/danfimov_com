@@ -1,0 +1,40 @@
+/* Content Inline */
+
+/* Links */
+
+.content-inline {
+	a {
+		color: var(--color-text-primary);
+
+		&:focus-visible {
+			outline: 2px solid var(--color-focus-ring);
+			outline-offset: 2px;
+			border-radius: 2px;
+		}
+	}
+}
+
+/* Code */
+
+.content-inline {
+	code {
+		padding: 0.1em 0.2em;
+		border-radius: 0.1em;
+		box-decoration-break: clone;
+		background-color: var(--content-code-back);
+		hyphens: none;
+		font-family: var(--font-family-code);
+	}
+}
+
+/* Emphasis */
+
+.content-inline {
+	em {
+		font-style: italic;
+	}
+
+	strong {
+		font-weight: 600;
+	}
+}

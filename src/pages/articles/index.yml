@@ -1,0 +1,8 @@
+title: Статьи
+desc: Python, backend, and architecture
+layout: page.njk
+pagination:
+  data: collections.articles
+  size: 6
+  reverse: true
+permalink: 'articles/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1 }}/{% endif %}index.html'

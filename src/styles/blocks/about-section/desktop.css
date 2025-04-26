@@ -1,0 +1,8 @@
+@media (width >= 1760px) {
+	/* Scribble */
+	.about-section__scribble--contacts {
+		inset-block-start: -90px;
+		inset-inline-start: -620px;
+	}
+
+}
