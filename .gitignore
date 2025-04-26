@@ -109,3 +109,6 @@ target/
 
 # MacOS files
 .DS_Store
+
+# js dependencies
+node_modules/
