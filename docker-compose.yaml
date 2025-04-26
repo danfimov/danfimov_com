@@ -1,6 +1,0 @@
-services:
-  app:
-    container_name: danfimov_app
-    build:
-      context: .
-      dockerfile: Dockerfile
