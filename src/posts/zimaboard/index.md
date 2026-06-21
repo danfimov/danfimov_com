@@ -1,6 +1,7 @@
-I've always been curious to tinker with some hardware like a Raspberry Pi. But the barrier to entry in this area is, well... not the friendliest, in my opinion. So I picked a different option - a Zimaboard.
+I've always been curious to tinker with some hardware like a Raspberry Pi. But the barrier to entry in this area is, well... not the friendliest, in my opinion. 
+So I went with a simplier yet still powerfull option - [Zimaboard 2](https://www.zimaspace.com/products/single-board2-server).
 
-## My gadgets, my precious gadgets
+## Firt look
 
 I really enjoyed the onboarding, where the very first thing you do is take apart your brand-new little server and connect a tiny fan. The cat enjoyed it too. He played with it all evening - stopping it with his paw and waiting for it to spin back to life:
 
@@ -10,7 +11,7 @@ My Zimaboard has already picked up a fair number of add-ons since its first boot
 
 {% asset_img 'before-zimaboard.jpg', 'zimaboard' %}
 
-Now it has grown an HDD for backups, an SSD for hot storage, and a base station for the smart home:
+Now I have an HDD for backups (still waiting another one), an SSD for hot storage, and a base station for the smart home:
 
 {% asset_img 'after-zimaboard.jpg', 'zimaboard' %}
 
