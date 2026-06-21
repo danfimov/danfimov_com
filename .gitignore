@@ -112,3 +112,5 @@ target/
 
 # js dependencies
 node_modules/
+
+_site

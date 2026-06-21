@@ -1,0 +1,18 @@
+---
+layout: base
+---
+
+<div class="min-h-screen flex flex-col">
+
+  <main class="flex-1 w-11/12 max-w-2xl mx-auto">
+
+    {% include "nav.njk" %}
+
+    {{ content | safe }}
+
+  </main>
+
+  {% if not hideFooter %}
+    {% include "footer.njk" %}
+  {% endif %}
+</div>

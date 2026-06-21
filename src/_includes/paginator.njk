@@ -1,0 +1,25 @@
+{% if pagination.pages.length > 1 %}
+<nav class="mt-16 flex items-center justify-center gap-1.5 text-sm" aria-label="Pagination">
+
+  {% if pagination.href.previous %}
+    <a href="{{ pagination.href.previous }}" aria-label="Previous page" class="px-3 py-1.5 rounded-md text-muted hover:text-accent hover:bg-line dark:text-muted-dark dark:hover:text-accent-dark dark:hover:bg-line-dark transition-colors">&larr;</a>
+  {% else %}
+    <span aria-hidden="true" class="px-3 py-1.5 text-line dark:text-line-dark cursor-not-allowed">&larr;</span>
+  {% endif %}
+
+  {% for pageEntry in pagination.pages %}
+    {% if page.url == pagination.hrefs[loop.index0] %}
+      <span aria-current="page" class="px-3 py-1.5 rounded-md font-medium bg-accent text-white dark:bg-accent-dark dark:text-paper-dark">{{ loop.index }}</span>
+    {% else %}
+      <a href="{{ pagination.hrefs[loop.index0] }}" class="px-3 py-1.5 rounded-md text-muted hover:text-accent hover:bg-line dark:text-muted-dark dark:hover:text-accent-dark dark:hover:bg-line-dark transition-colors">{{ loop.index }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if pagination.href.next %}
+    <a href="{{ pagination.href.next }}" aria-label="Next page" class="px-3 py-1.5 rounded-md text-muted hover:text-accent hover:bg-line dark:text-muted-dark dark:hover:text-accent-dark dark:hover:bg-line-dark transition-colors">&rarr;</a>
+  {% else %}
+    <span aria-hidden="true" class="px-3 py-1.5 text-line dark:text-line-dark cursor-not-allowed">&rarr;</span>
+  {% endif %}
+
+</nav>
+{% endif %}

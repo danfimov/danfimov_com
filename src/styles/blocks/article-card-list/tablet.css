@@ -1,9 +1,0 @@
-@media (1024px <= width < 1760px) {
-
-	/* Article Card List */
-
-	.article-card-list {
-		row-gap: 60px;
-	}
-
-}

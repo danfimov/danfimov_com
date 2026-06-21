@@ -1,0 +1,14 @@
+title: "Help for Makefile"
+desc: "Couple options for adding help command to Makefile."
+date: 2025-04-26
+tags:
+  - DevExp
+toc:
+  - title: Мне нужна помощь
+    items:
+      - Название и описание команд
+      - Группировка команд
+      - Цветное выделение
+  - title: Обработка некорректных целей
+  - title: Заключение
+cover: false

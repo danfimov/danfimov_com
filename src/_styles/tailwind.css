@@ -1,0 +1,206 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Manual light/dark toggle (base.njk adds/removes `.dark` on <html>).
+   Without this, v4's `dark:` would follow prefers-color-scheme and ignore
+   the toggle button entirely. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Refined system sans — distinctive through scale & spacing, no font files shipped. */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
+
+  /* Light — warm paper, soft ink, one quiet accent. */
+  --color-paper: #fcfcfb;
+  --color-ink: #1f1f1d;
+  --color-muted: #6b6b66;
+  --color-line: #e7e7e2;
+  --color-accent: #2f5fd0;
+
+  /* Dark — never pure black. */
+  --color-paper-dark: #121212;
+  --color-ink-dark: #e6e6e2;
+  --color-muted-dark: #9a9a92;
+  --color-line-dark: #2a2a28;
+  --color-accent-dark: #8fb0f7;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-family: var(--font-sans);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+}
+
+/* ---- Reading column (Tailwind Typography), mapped to our palette ---- */
+.prose {
+  --tw-prose-body: var(--color-ink);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-counters: var(--color-muted);
+  --tw-prose-bullets: var(--color-line);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-muted);
+  --tw-prose-quote-borders: var(--color-line);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-code: var(--color-ink);
+  --tw-prose-th-borders: var(--color-line);
+  --tw-prose-td-borders: var(--color-line);
+}
+.dark .prose {
+  --tw-prose-body: var(--color-ink-dark);
+  --tw-prose-headings: var(--color-ink-dark);
+  --tw-prose-links: var(--color-accent-dark);
+  --tw-prose-bold: var(--color-ink-dark);
+  --tw-prose-counters: var(--color-muted-dark);
+  --tw-prose-bullets: var(--color-line-dark);
+  --tw-prose-hr: var(--color-line-dark);
+  --tw-prose-quotes: var(--color-muted-dark);
+  --tw-prose-quote-borders: var(--color-line-dark);
+  --tw-prose-captions: var(--color-muted-dark);
+  --tw-prose-code: var(--color-ink-dark);
+  --tw-prose-th-borders: var(--color-line-dark);
+  --tw-prose-td-borders: var(--color-line-dark);
+}
+
+/* Headings carry the anchor link from markdown-it-anchor; keep them looking
+   like headings, reveal the accent only on hover. */
+.prose :where(h1, h2, h3) {
+  letter-spacing: -0.02em;
+}
+.prose .header-anchor {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+}
+.prose .header-anchor:hover {
+  color: var(--color-accent);
+}
+.dark .prose .header-anchor:hover {
+  color: var(--color-accent-dark);
+}
+
+/* Body links: quiet underline, accent on hover. */
+.prose a:not(.header-anchor) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--color-line);
+  transition: text-decoration-color 0.15s ease;
+}
+.prose a:not(.header-anchor):hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---- Code: pepelsbey-style panels that adapt to the theme ---- */
+.prose pre {
+  background: #f6f6f3;
+  color: #383834;
+  border: 1px solid var(--color-line);
+  border-radius: 0.65rem;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.65;
+}
+.dark .prose pre {
+  background: #16161a;
+  color: #d6d6cf;
+  border-color: var(--color-line-dark);
+}
+
+/* Inline code: subtle chip, no stray backticks from the typography plugin. */
+.prose :not(pre) > code {
+  background: var(--color-line);
+  border-radius: 0.3rem;
+  padding: 0.15em 0.4em;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+.dark .prose :not(pre) > code {
+  background: #26262b;
+}
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: "";
+}
+
+/* ---- Embedded media (video files, iframes) ---- */
+.prose video,
+.prose iframe {
+  width: 100%;
+  border-radius: 0.65rem;
+  border: 1px solid var(--color-line);
+}
+.dark .prose video,
+.dark .prose iframe {
+  border-color: var(--color-line-dark);
+}
+/* Responsive 16:9 box for embedded players */
+.prose iframe {
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
+/* ---- Self-hosted syntax highlighting (replaces the CDN Prism theme).
+   Token classes are emitted by @11ty/eleventy-plugin-syntaxhighlight. ---- */
+.token.comment, .token.prolog, .token.doctype, .token.cdata { color: #a0a098; font-style: italic; }
+.token.punctuation { color: #8a8a84; }
+.token.keyword, .token.atrule, .token.important { color: #8959a8; }
+.token.boolean, .token.number, .token.constant { color: #c25c1d; }
+.token.string, .token.char, .token.attr-value, .token.regex { color: #5a7d2a; }
+.token.function { color: #3b6ea5; }
+.token.class-name { color: #b07b1e; }
+.token.tag, .token.deleted { color: #c0392b; }
+.token.attr-name, .token.builtin, .token.property, .token.symbol { color: #b07b1e; }
+.token.operator, .token.entity, .token.url { color: #6b6b66; }
+.token.selector, .token.inserted { color: #5a7d2a; }
+
+.dark .token.comment, .dark .token.prolog, .dark .token.doctype, .dark .token.cdata { color: #5c6370; }
+.dark .token.punctuation { color: #9a9a92; }
+.dark .token.keyword, .dark .token.atrule, .dark .token.important { color: #bb9af7; }
+.dark .token.boolean, .dark .token.number, .dark .token.constant { color: #ff9e64; }
+.dark .token.string, .dark .token.char, .dark .token.attr-value, .dark .token.regex { color: #9ece6a; }
+.dark .token.function { color: #7aa2f7; }
+.dark .token.class-name { color: #e0af68; }
+.dark .token.tag, .dark .token.deleted { color: #f7768e; }
+.dark .token.attr-name, .dark .token.builtin, .dark .token.property, .dark .token.symbol { color: #e0af68; }
+.dark .token.operator, .dark .token.entity, .dark .token.url { color: #9a9a92; }
+.dark .token.selector, .dark .token.inserted { color: #9ece6a; }
+
+/* ---- Small components ---- */
+.post-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-muted);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  margin-right: 0.4rem;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.post-tag:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.dark .post-tag {
+  color: var(--color-muted-dark);
+  border-color: var(--color-line-dark);
+}
+.dark .post-tag:hover {
+  color: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+}

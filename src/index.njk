@@ -1,0 +1,46 @@
+---
+layout: default
+title: danfimov blog
+subtitle: My own part of the internet
+pagination:
+  data: collections.posts
+  size: 10
+  reverse: true
+  alias: posts
+---
+
+{% for post in pagination.items %}
+{% if post.data.published %}
+
+{% set y = post.date.getFullYear() %}
+{% set prevY = pagination.items[loop.index0 - 1].date.getFullYear() if loop.index0 > 0 else 0 %}
+{% if y != prevY %}
+  <h2 class="mt-10 mb-1 font-mono text-sm tracking-widest text-muted dark:text-muted-dark">{{ y }}</h2>
+{% endif %}
+
+<article class="py-6 border-b border-line dark:border-line-dark">
+  <div class="flex items-baseline justify-between gap-4">
+    <h3 class="text-xl sm:text-2xl font-semibold tracking-tight leading-snug">
+      <a href="{{ post.url }}" class="hover:text-accent dark:hover:text-accent-dark transition-colors">{{ post.data.title }}</a>
+    </h3>
+    <time class="shrink-0 font-mono text-sm text-muted dark:text-muted-dark whitespace-nowrap">{{ post.date | postDate }}</time>
+  </div>
+
+  <p class="mt-2 text-muted dark:text-muted-dark leading-relaxed">{{ post.data.desc or post.data.post_excerpt }}</p>
+
+  <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap gap-y-2">
+      {% for tag in post.data.tags %}
+        {% if tag != "posts" %}
+          <a href="/tags/{{ tag }}"><span class="post-tag">{{ tag }}</span></a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <a class="shrink-0 text-sm font-medium text-accent hover:underline dark:text-accent-dark" href="{{ post.url }}">Read &rarr;</a>
+  </div>
+</article>
+
+{% endif %}
+{% endfor %}
+
+{% include "paginator.njk" %}
