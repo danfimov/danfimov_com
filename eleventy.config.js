@@ -2,7 +2,7 @@ import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import { DateTime } from "luxon";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 
 export default function (eleventyConfig) {
   // Plugins
@@ -39,10 +39,13 @@ export default function (eleventyConfig) {
     return Math.max(1, Math.floor(textOnly.length / 450));
   });
 
-  // Format a post date as year-month-day
-  eleventyConfig.addFilter("postDate", (dateObj) =>
-    DateTime.fromJSDate(dateObj).toFormat("yyyy-MM-dd")
-  );
+  eleventyConfig.addFilter("postDate", (dateObj) => {
+    const dt =
+      dateObj instanceof Date
+        ? DateTime.fromJSDate(dateObj)
+        : DateTime.fromISO(String(dateObj));
+    return dt.toFormat("yyyy-MM-dd");
+  });
 
   // Markdown with header anchors
   const md = markdownIt({ html: true, linkify: true });
@@ -60,6 +63,15 @@ export default function (eleventyConfig) {
   eleventyConfig.addShortcode("asset_img", function (filename, alt = "", path) {
     const base = path ?? `${this.page.url}images/`;
     return `<img class="my-4" src="${base}${filename}" alt="${alt}" />`;
+  });
+
+  // {% asset_video 'clip.mp4', 'cover.png' %} — embeds a local video from the
+  // current post's images/ folder; optional second arg is a poster image,
+  // optional third arg overrides the base path.
+  eleventyConfig.addShortcode("asset_video", function (filename, poster = "", path) {
+    const base = path ?? `${this.page.url}images/`;
+    const posterAttr = poster ? ` poster="${base}${poster}"` : "";
+    return `<video class="my-4" controls preload="metadata"${posterAttr} src="${base}${filename}"></video>`;
   });
 
   return {

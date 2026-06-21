@@ -23,13 +23,13 @@
 	"devDependencies": {
 		"@11ty/eleventy": "^3.1.6",
 		"@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
-		"@tailwindcss/cli": "^4.1.5",
+		"@tailwindcss/cli": "^4.3.1",
 		"@tailwindcss/typography": "^0.5.20",
-		"concurrently": "^9.1.2",
-		"js-yaml": "^4.2.0",
-		"luxon": "^3.5.0",
-		"markdown-it": "^14.1.0",
+		"concurrently": "^10.0.3",
+		"js-yaml": "^5.0.0",
+		"luxon": "^3.7.2",
+		"markdown-it": "^14.2.0",
 		"markdown-it-anchor": "^9.2.0",
-		"tailwindcss": "^4.1.5"
+		"tailwindcss": "^4.3.1"
 	}
 }

@@ -137,6 +137,23 @@
   content: "";
 }
 
+/* ---- Embedded media (video files, iframes) ---- */
+.prose video,
+.prose iframe {
+  width: 100%;
+  border-radius: 0.65rem;
+  border: 1px solid var(--color-line);
+}
+.dark .prose video,
+.dark .prose iframe {
+  border-color: var(--color-line-dark);
+}
+/* Responsive 16:9 box for embedded players */
+.prose iframe {
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
 /* ---- Self-hosted syntax highlighting (replaces the CDN Prism theme).
    Token classes are emitted by @11ty/eleventy-plugin-syntaxhighlight. ---- */
 .token.comment, .token.prolog, .token.doctype, .token.cdata { color: #a0a098; font-style: italic; }

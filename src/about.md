@@ -2,6 +2,7 @@
 layout: default
 hideFooter: true
 title: This is me.
+permalink: false
 ---
 
-She/her. A software person. Singapore.
+A software person. Belgrade.
