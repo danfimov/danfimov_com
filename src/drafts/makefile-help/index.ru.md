@@ -13,7 +13,7 @@ CLI утилиты неудобны без `help` / `--help`. Любой инс�
 На такой вариант решения я натнулся в [блоге Luciano Nooijen](https://lucianonooijen.com/blog/help-makefile/).
 Он позволяет получить простой список команд с их описанием:
 
-```make
+```makefile
 .PHONY: help
 help: ## Shows all commands
 	@echo 'All Makefile commands:'
@@ -24,7 +24,7 @@ help: ## Shows all commands
 
 Чтобы добавить описание к команде используется двойной `#`:
 
-```make
+```makefile
 .PHONY: migrate
 migrate:  ## Migrate database
 	uv run python3 -m speechkit.infrastructure.database.migrations upgrade head
@@ -40,7 +40,7 @@ migrate:  ## Migrate database
 
 Если у вас много команд в Makefile, имеет смысл сгруппировать их по категориям. Вот более сложный вариант с использованием Perl:
 
-```make
+```makefile
 HELP_FUN = \
 	%help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \
 	if/^([\w-_]+)\s*:.*\#\#(?:@(\w+))?\s(.*)$$/}; \
@@ -54,7 +54,7 @@ help: ##@Help Show this help
 
 Для добавления команды в определенную группу используется специальный формат комментария:
 
-```make
+```makefile
 .PHONY: migrate
 migrate:  ##@Database Migrate database
 	uv run alembic upgrade head
@@ -70,7 +70,7 @@ migrate:  ##@Database Migrate database
 
 Для лучшей визуальной организации можно добавить цветной вывод:
 
-```make
+```makefile
 YELLOW := \033[33m
 GREEN := \033[32m
 CIAN := \033[36m
@@ -92,7 +92,7 @@ HELP_FUN = \
 
 Важная часть хорошего CLI — понятные сообщения об ошибках. Добавим обработку случаев, когда пользователь ошибся в команде:
 
-```make
+```makefile
 .DEFAULT:
 	@echo "No such command (or you pass two or many targets to ). List of possible commands: make help"
 ```
@@ -101,7 +101,7 @@ HELP_FUN = \
 
 Можно пойти дальше и сделать команду `help` запускаемой по умолчанию (когда вызывается просто `make` без аргументов):
 
-```make
+```makefile
 .DEFAULT_GOAL := help
 ```
 

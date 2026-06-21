@@ -11,6 +11,9 @@ export default function (eleventyConfig) {
   // Merge tags from data cascade
   eleventyConfig.setDataDeepMerge(true);
 
+  // Current year, for the footer copyright line
+  eleventyConfig.addGlobalData("buildYear", () => `${new Date().getFullYear()}`);
+
   // Read .yml/.yaml data files. Each post is <slug>/index.md, so its sibling
   // index.yml is picked up automatically as that template's data file.
   eleventyConfig.addDataExtension("yml,yaml", (contents) => yaml.load(contents));

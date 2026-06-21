@@ -1,8 +1,8 @@
-title: "Help в Makefile"
-desc: "Несколько способов добавить `help` команду в Makefile."
+title: "Help for Makefile"
+desc: "Couple options for adding help command to Makefile."
 date: 2025-04-26
 tags:
-  - QOL
+  - DevExp
 toc:
   - title: Мне нужна помощь
     items:

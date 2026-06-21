@@ -13,10 +13,7 @@
     <link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json" />
 
-    <link rel="preload" href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css"></noscript>
     <link href="/assets/styles/tailwind.css" rel="stylesheet" />
-    <link href="/assets/styles/index.css" rel="stylesheet" />
     <script>
       const isDarkMode = () => localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
       if (isDarkMode()) {
@@ -27,7 +24,7 @@
     </script>
   </head>
 
-  <body class="dark:text-white dark:bg-black">
+  <body class="bg-paper text-ink dark:bg-paper-dark dark:text-ink-dark">
     {{ content | safe }}
     
   <script>

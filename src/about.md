@@ -1,5 +1,6 @@
 ---
 layout: default
+hideFooter: true
 title: This is me.
 ---
 

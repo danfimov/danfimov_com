@@ -4,11 +4,15 @@ layout: base
 
 <div class="min-h-screen flex flex-col">
 
-<main class="flex-1 w-10/12 max-w-screen-sm md:max-w-screen-md mx-auto">
+  <main class="flex-1 w-11/12 max-w-2xl mx-auto">
 
-  {{ content |safe }}
+    {% include "nav.njk" %}
 
-</main>
+    {{ content | safe }}
 
-{% include "footer.njk" %}
+  </main>
+
+  {% if not hideFooter %}
+    {% include "footer.njk" %}
+  {% endif %}
 </div>
