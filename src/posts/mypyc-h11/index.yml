@@ -1,0 +1,8 @@
+title: "Making Python code twice as fast with type annotations"
+desc: "How I compiled the h11 HTTP/1.1 library with mypyc and what pitfalls I hit along the way."
+date: 2026-09-19
+published: true
+tags:
+  - Python
+  - mypyc
+  - performance
