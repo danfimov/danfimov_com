@@ -1,17 +1,20 @@
-Rewriting parts of a Python library in Rust with PyO3 is a perfectly normal way to speed it up these days. But what if you're not ready to learn a whole new language just for potential optimizations? If you still want the speedup and don't want to leave the cozy world of Python, there is mypyc.
+Rewriting parts of a Python library in Rust with [PyO3](https://github.com/pyo3/pyo3) is a common way to speed it up these days. If you still want the speedup but don't want to leave the cozy world of Python, there is [mypyc](https://mypyc.readthedocs.io/en/latest/introduction.html).
 
-> TL;DR: I'll show how to speed up [h11](https://github.com/python-hyper/h11) (a small HTTP/1.1 library with 710k dependents on GitHub) by roughly a factor of two by compiling it with mypyc. Along the way I'll walk through the interesting errors I hit while adapting the codebase to mypyc, and how I fixed them.
+> **TL;DR**: I'll show how to speed up [h11](https://github.com/python-hyper/h11) (a small HTTP/1.1 library with 710k dependents on GitHub) by roughly a factor of two by compiling it with mypyc. Along the way I'll walk through the interesting errors I hit while adapting the codebase to mypyc, and how I fixed them.
+
+The code with the changes mentioned in the article is available in a GitHub repository: [danfimov/h11](https://github.com/danfimov/h11).
 
 ## The basics first
 
-You've heard of mypy (maybe even used it), but what is mypyc? mypyc is an ahead-of-time compiler that turns Python code annotated with type hints into CPython C extensions. In plain words: mypyc takes your Python code and, relying on the type annotations, compiles it ahead of time into `.so` or `.pyd` files (depending on the platform). That file holds a CPython C extension. You import it like any other module, but inside it isn't interpreted on the fly: native code runs right away, and that's where the speedup comes from.
+You've probably heard of [mypy](https://mypy.readthedocs.io/en/stable/) (and hopefully used it), but what is mypyc? Mypyc is an ahead-of-time compiler that turns Python code annotated with type hints into CPython C extensions. In plain words: mypyc takes your Python code and, relying on the type annotations, compiles it into `.so` or `.pyd` files (depending on the platform). Those files hold C extension code, and you can import the result like any regular module. Under the hood, Python code is no longer interpreted on the fly; what runs is native code, precompiled for your platform, and that's where the speedup comes from.
 
-Type annotations in the source are needed to:
+Type annotations in the source Python code are needed to:
+
 - pick more efficient representations (for example, "unboxed" integers). Roughly speaking, instead of a `PyObject` for an integer you use a plain `int32_t` at the C level;
-- do **early binding** (resolve function calls and attribute access at compile time);
+- do early binding (resolve function calls and attribute access at compile time);
 - minimize dynamic checks and namespace lookups. That is, no need to walk the whole chain: look into `__dict__`, then into the classes (MRO), then take descriptors, `__getattribute__` and `__getattr__` into account. Instead, the compiler can remember in advance which struct fields to access.
 
-Also, at the boundary between compiled and regular Python code, mypyc inserts explicit type checks that raise `TypeError` if the passed types don't match.
+Note that wherever regular Python calls into compiled code, mypyc inserts explicit type checks that raise `TypeError` if the passed types don't match.
 
 ## Fixing the library's type annotations
 
@@ -33,16 +36,17 @@ Let's see how bad things are in h11:
 Found 13 errors in 3 files (checked 11 source files)
 ```
 
-Not that bad: a few redundant `type: ignore` comments and a few type mismatches. Keep in mind that the library isn't young and supports old Python versions, all the way back to 3.8. To avoid going overboard with backward compatibility, we'll take the latest mypy version at the time of writing (2.3.1) and fix the annotations as if we only had to support Python 3.10+ (all releases that aren't EOL).
+Not that bad: a couple of redundant `# type: ignore` comments and a few type mismatches. Keep in mind that the library isn't exactly young and supports old Python versions, all the way back to 3.8. To avoid going overboard with backward compatibility, we'll take the latest mypy version at the time of writing (2.3.1) and fix the annotations as if we only had to support Python 3.10+ (all releases still supported).
 
 Basically, we'll go through three stages:
-- Satisfy mypy and get the code to the point where it reports no errors in strict mode
-- Make mypyc compile everything successfully
-- Make the compiled code work correctly at runtime (imports and tests pass)
 
-### `bytes` vs `bytearray` in the readers chain
+- Satisfy mypy and get the code to the point where it reports no errors in strict mode;
+- Make mypyc compile everything successfully;
+- Make the compiled code work correctly at runtime (imports and tests pass).
 
-Let's go through the errors mypy returns one by one. `ReceiveBuffer.maybe_extract_lines()` and `maybe_extract_at_most()` return
+### `bytes` vs `bytearray` in the call chain
+
+Let's go through the errors mypy returns. The `ReceiveBuffer.maybe_extract_lines()` [method](https://github.com/python-hyper/h11/blob/62c5068c971579d61fa1b55373390e12f25fd856/h11/_receivebuffer.py#L104) and the `maybe_extract_at_most()` [method](https://github.com/python-hyper/h11/blob/62c5068c971579d61fa1b55373390e12f25fd856/h11/_receivebuffer.py#L77) return
 `bytearray` (this is done to avoid copying the data one more time). Meanwhile `_obsolete_line_fold`, `_decode_header_lines`, `validate()` and the `Data()` constructor were annotated as accepting `bytes`. Hence the mismatch that mypy reports:
 
 ```bash
@@ -58,7 +62,7 @@ h11/_readers.py:204: error: Argument "data" to "Data" has incompatible type "byt
 h11/_readers.py:218: error: Argument "data" to "Data" has incompatible type "bytearray"; expected "bytes"  [arg-type]
 ```
 
-To fix this, it's enough to widen the signatures of `_obsolete_line_fold`, `_decode_header_lines`, `validate()` and the `Data()` constructor to `bytes | bytearray` instead of plain `bytes`. In general, we go through every place where a byte string flows from `ReceiveBuffer` straight into an API declared for pure `bytes`. For this I introduced a helper type and threaded it through the code like this:
+To fix this, it's enough to widen the signatures of `_obsolete_line_fold`, `_decode_header_lines`, `validate()` and the `Data()` constructor to `bytes | bytearray` instead of plain `bytes`. In general, we go through every place where a byte string flows from `ReceiveBuffer` straight into an API declared for pure `bytes`. For this I introduced a helper type and used it throughout the code like this:
 
 ```python
 # _util.py
@@ -67,13 +71,13 @@ ByteLike = Union[bytes, bytearray]
 def validate(regex, data: ByteLike, ...) -> Dict[str, bytes]: ...
 ```
 
-A similar problem affects `method`/`target`/`http_version`/`reason` in the `Request`/`_ResponseBase` constructors: they're annotated as `bytes`, but judging by the tests they can also accept `bytearray`. We'll replace those too.
+A similar problem affects `method`/`target`/`http_version`/`reason` (for example [here](https://github.com/python-hyper/h11/blob/62c5068c971579d61fa1b55373390e12f25fd856/h11/_events.py#L77)) in the `Request`/`_ResponseBase` constructors: they're annotated as `bytes`, but judging by the tests they can also accept `bytearray`. We'll replace those too.
 
-After these changes and removing the unneeded `type: ignore` comments, mypy is clean. Does that mean mypyc can already build the code? Unfortunately, not yet. Running `mypyc h11 --exclude 'h11/tests/'` produces a bunch of errors. Let's figure out what needs fixing and how.
+After these changes and removing the unneeded `# type: ignore` comments, mypy is clean. Does that mean mypyc can already build the code? Unfortunately, not yet. Running `mypyc h11 --exclude 'h11/tests/'` produces a bunch of errors. Let's figure out what needs fixing and how.
 
 ### Fixing the Sentinel metaclass
 
-In [`h11/_util.py`](https://github.com/python-hyper/h11/blob/62c5068c971579d61fa1b55373390e12f25fd856/h11/_util.py#L107) there is this class:
+In [h11/_util.py](https://github.com/python-hyper/h11/blob/62c5068c971579d61fa1b55373390e12f25fd856/h11/_util.py#L107) there is this class:
 
 ```python
 class Sentinel(type):
@@ -99,7 +103,7 @@ h11/_util.py:112: error: Inheriting from most builtin types is unimplemented
 note: Potential workaround: @mypy_extensions.mypyc_attr(native_class=False)
 ```
 
-The `v.__class__ = v` trick, which gives every sentinel the special property `type(IDLE) is IDLE`, simply can't be expressed in a compiled class. There are two ways around this:
+The `v.__class__ = v` hack, which lets every sentinel pass a check like `type(IDLE) is IDLE`, simply can't be expressed in a compiled class. There are two ways around this:
 
 - Follow the hint from mypyc itself and put the `@mypyc_attr(native_class=False)` decorator on the class, then carry on. It tells the compiler "don't try to turn this class into a native C extension, leave it as a regular interpreted Python class". The downsides: we get a runtime dependency on `mypy_extensions`, and this part of the code won't get any of the speed benefits of compilation.
 - Rewrite `Sentinel` as an empty class and inherit from it directly with `class IDLE(Sentinel)`, giving up the nice `__repr__` and `type(sentinel) is sentinel`. I think that's acceptable for the purposes of this article (if I were sending a real PR to the library, I'd have to think about it some more).
@@ -163,7 +167,7 @@ The error then changes to:
 Traceback (most recent call last):
   File "<frozen runpy>", line 198, in _run_module_as_main
   File "<frozen runpy>", line 88, in _run_code
-  File "/home/danfimov/Documents/projects/h11-mypyc/a.py", line 1, in <module>
+  File "/home/danfimov/Documents/projects/h11-mypyc/test_script.py", line 1, in <module>
     import h11
   File "h11/__init__.py", line 9, in <module>
     from h11._connection import Connection, NEED_DATA, PAUSED
@@ -298,7 +302,7 @@ After that, all the tests finally pass.
 
 ## Measuring the performance gain
 
-Now it's time to measure how much compilation gives us. For this we can build a small toy benchmark: parsing a GET request with a realistic set of browser headers, including a long cookie, plus sending a 1000-byte response.
+Now it's time to measure how much speedup compilation gives us. For this we can build a small toy benchmark: parsing a GET request with a realistic set of browser headers, including a long cookie, plus sending a 1000-byte response.
 
 | Version                            | Median, req/sec | Relative to baseline |
 | ---------------------------------- | --------------- | -------------------- |
@@ -306,10 +310,13 @@ Now it's time to measure how much compilation gives us. For this we can build a 
 | `h11`, after changes, pure Python  | 37 409          | +2%                  |
 | `h11`, after changes and compiled  | 58 983          | **+62%**             |
 
-So the version with our changes didn't get slower (+2% is within the noise of the benchmark). But compilation gave a decent boost. No, it's not the clickbait 2x, but it's still quite noticeable.
+The version with our changes didn't get slower (+2% is within the noise of the benchmark). But compilation gave a decent boost. No, it's not the clickbait 2x, but it's still quite noticeable.
 
 I think we can wrap up here with an interim conclusion: compilation gives a real gain, but it requires careful typing and an understanding of how mypyc-compiled code behaves. As a proof of concept, I forked the h11 repository and published a Python package so I can play with optimizations even more:
+
 - [the fork's code](https://github.com/danfimov/h11) (you can easily check the diff against the upstream code there)
 - [h11-mypyc package on PyPI](https://pypi.org/project/h11-mypyc/)
 
-In fact, a 2x gain can be reached with additional code optimizations and a careful look at cProfile/memray output. So if the article gets a good response, I'm planning to write a second part dedicated to exactly that.
+> In fact, a 2x gain can be reached with additional code optimizations and a careful look at [Tachyon](https://docs.python.org/3.15/whatsnew/3.15.html#whatsnew315-sampling-profiler)/[Memray](https://github.com/bloomberg/memray) output. Some of them are already applied in the fork. So if the article gets a good response, I'm planning to write a second part dedicated to exactly that.
+
+Thanks for reading. I hope you found the article useful. I'm happy to discuss any questions in the comments.
